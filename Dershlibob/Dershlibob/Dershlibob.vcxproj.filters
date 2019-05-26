@@ -1,17 +1,109 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="res">
+      <UniqueIdentifier>{4FA5880B-BBAE-887C-442A-9F7CB032947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="res\shaders">
+      <UniqueIdentifier>{4841F028-B4F6-681E-3DEB-62F5A99F5F22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="res\textures">
+      <UniqueIdentifier>{227C1C83-0EDF-AB27-B764-E4DDA3A677AA}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Dershlibob">
+      <UniqueIdentifier>{3AD0CB38-269E-BF3E-0F32-3065FB9E9BA3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Dershlibob\Rendering">
+      <UniqueIdentifier>{07AAC4C4-F3CE-1345-1C1A-F9D4089E1263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Dershlibob\Rendering\OpenGL">
+      <UniqueIdentifier>{5BE5CA4F-C7C8-D98F-D0CB-07CC3C2EA0E0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Dershlibob.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dershlibob\Application.h">
+      <Filter>src\Dershlibob</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dershlibob\EntryPoint.h">
+      <Filter>src\Dershlibob</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dershlibob\Rendering\OpenGL\IndexBuffer.h">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dershlibob\Rendering\OpenGL\Renderer.h">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dershlibob\Rendering\OpenGL\Shader.h">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dershlibob\Rendering\OpenGL\Texture.h">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dershlibob\Rendering\OpenGL\VertexArray.h">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dershlibob\Rendering\OpenGL\VertexBufferLayout.h">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dershlibob\Rendering\OpenGL\vertexBuffer.h">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dershlibob\core.h">
+      <Filter>src\Dershlibob</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Dershlibob\Application.cpp">
+      <Filter>src\Dershlibob</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dershlibob\Rendering\OpenGL\IndexBuffer.cpp">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dershlibob\Rendering\OpenGL\Renderer.cpp">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dershlibob\Rendering\OpenGL\Shader.cpp">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dershlibob\Rendering\OpenGL\Texture.cpp">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dershlibob\Rendering\OpenGL\VertexArray.cpp">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dershlibob\Rendering\OpenGL\vertexBuffer.cpp">
+      <Filter>src\Dershlibob\Rendering\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\Basic.shader">
+      <Filter>res\shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\Circle.jpg">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\Mario.png">
+      <Filter>res\textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
