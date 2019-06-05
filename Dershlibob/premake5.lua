@@ -1,5 +1,5 @@
 workspace "Dershlibob"
-	architecture "x86"
+	architecture "x64"
 	startproject "Application"
 	
 	configurations
@@ -8,7 +8,9 @@ workspace "Dershlibob"
 		"Release",
 		"Dist"
 	}
-	
+
+startproject "Sandbox"
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 	
 IncludeDir = {}
@@ -16,11 +18,14 @@ IncludeDir["GLFW"] = "Dershlibob/vendor/GLFW/include"
 IncludeDir["GLAD"] = "Dershlibob/vendor/GLAD/include"
 IncludeDir["glm"] = "Dershlibob/vendor/glm"
 IncludeDir["stb_image"] = "Dershlibob/vendor/stb_image"
-IncludeDir["resources"] = "Dershlibob/res"
+IncludeDir["assimp"] = "Dershlibob/vendor/assimp"
 
+group "Dependencies"
+	include "Dershlibob/vendor/GLFW"
+	include "Dershlibob/vendor/GLAD"
+	--include "Dershlibob/vendor/assimp"
 
-include "Dershlibob/vendor/GLFW"
-include "Dershlibob/vendor/GLAD"
+group ""
 
 project "Dershlibob"
 	location "Dershlibob"
@@ -36,13 +41,10 @@ project "Dershlibob"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl",
+		"%{prj.name}/vendor/glm/**.hpp",
+		"%{prj.name}/vendor/glm/**.inl",
 		"%{prj.name}/vendor/stb_image/stb_image.h",
 		"%{prj.name}/vendor/stb_image/stb_image.cpp",
-		"%{prj.name}/res/**.shader",
-		"%{prj.name}/res/**.jpg",
-		"%{prj.name}/res/**.png",
 	}
 	
 	defines
@@ -57,13 +59,14 @@ project "Dershlibob"
 		"%{IncludeDir.GLAD}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.resources}"
+		"%{IncludeDir.assimp}"
 	}
 	
 	links
 	{
 		"GLFW",
-		"GLAD"
+		"GLAD",
+		--"assimp"
 	}
 	
 	filter "system:windows"

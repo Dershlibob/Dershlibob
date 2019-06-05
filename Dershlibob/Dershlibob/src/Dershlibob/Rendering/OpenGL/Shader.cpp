@@ -6,7 +6,7 @@
 #include <sstream>
 
 #include "Renderer.h"
-
+ 
 
 Shader::Shader(const std::string & filepath)
 	: m_FilePath(filepath), m_RendererID(0)
@@ -20,10 +20,22 @@ Shader::~Shader()
 	glDeleteProgram(m_RendererID);
 }
 
-void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& Matrix)
+unsigned int Shader::GetRendererID()
 {
-	glUniformMatrix4fv(GetUniformLocation(name), 1, false, &Matrix[0][0]);
+	return m_RendererID;
 }
+
+//Shader* Shader::getInstance(const std::string & filepath)
+//{
+//	if (instance == 0)
+//	{
+//		instance = new Shader(filepath);
+//	}
+//
+//	return instance;
+//}
+//Shader* Shader::instance = 0;
+
 
 unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 {
@@ -99,7 +111,6 @@ ShaderProgramSource Shader::ParseShader(const std::string& filePath)
 		else
 		{
 			ss[(int)type] << line << '\n';
-			std::cout << line << std::endl;
 		}
 	}
 	return { ss[0].str(), ss[1].str() };
@@ -123,6 +134,21 @@ void Shader::SetUniform1i(const std::string& name, int value)
 void Shader::SetUniform4f(const std::string & name, float v0, float v1, float v2, float v3)
 {
 	glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
+}
+
+void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& Matrix)
+{
+	glUniformMatrix4fv(GetUniformLocation(name), 1, false, &Matrix[0][0]);
+}
+
+void Shader::SetUniform1f(const std::string & name, float v0)
+{
+	glUniform1f(GetUniformLocation(name), v0);
+}
+
+void Shader::SetUniform3f(const std::string& name, float v0, float v1, float v2)
+{
+	glUniform3f(GetUniformLocation(name), v0, v1, v2);
 }
 
 int Shader::GetUniformLocation(const std::string & name)

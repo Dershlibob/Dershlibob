@@ -1,20 +1,27 @@
-#include <iostream>
-#include "Application.h"
+// xcopy /y /d "$(OutDir)Dershlibob.dll" "$(OutDir)..\Sandbox"
 
-#include "glad\glad.h"
+#include <iostream>
+
+#include "Application.h"
+#include "Object.h"
+
+#include "Dershlibob\Rendering\OpenGL\Window.h"
+#include "Dershlibob\Rendering\OpenGL\Camera.h"
+#include "Dershlibob\Rendering\OpenGL\Renderer.h"
+#include "Dershlibob\Rendering\OpenGL\VertexBufferLayout.h"
+#include "Dershlibob\Rendering\OpenGL\Texture.h"
+#include "Dershlibob\Rendering\OpenGL\Model.h"
+
 #include "GLFW\glfw3.h"
 
 #include "glm.hpp"
 #include "gtc\matrix_transform.hpp"
 
-#include "Dershlibob\Rendering\OpenGL\Renderer.h"
-#include "Dershlibob\Rendering\OpenGL\VertexBufferLayout.h"
+#include "glad\glad.h"
 
-#include "Dershlibob\Rendering\OpenGL\Texture.h"
-
-#include <fstream>
-#include <sstream>
-#include <string>
+#include "assimp\cimport.h"
+#include "assimp\scene.h"
+#include "assimp\postprocess.h"
 
 using namespace std;
 
@@ -22,7 +29,7 @@ namespace DB
 {
 	Application::Application()
 	{
-		InitApplication();
+
 	}
 
 	Application::~Application()
@@ -32,109 +39,111 @@ namespace DB
 
 	void Application::Run()
 	{
-		GLFWwindow* window;
-
-		/* Initialize the library */
-		if (!glfwInit())
-			cout << "hi" << endl;
-
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-		/* Create a windowed mode window and its OpenGL context */
-		window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-		if (!window)
-		{
-			glfwTerminate();
-		}
-
-		/* Make the window's context current */
-		glfwMakeContextCurrent(window);
-
-		glfwSwapInterval(2);
-
+		Window* window = Window::getInstance();
+		Camera camera;
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
-		float positions[] = {
-			100.0f,  100.0f, 0.0f, 0.0f,
-			200.0f,  100.0f, 1.0f, 0.0f,
-			200.0f,  200.0f, 1.0f, 1.0f,
-			100.0f,  200.0f, 0.0f, 1.0f
-		};
+		Renderer* renderer = Renderer::getInstance();
+		Object TestObj(0, &camera);
+		Model MyModel("models/crysis/nanosuit.obj");
 
-		unsigned int indices[] = {
-			0, 1, 2,
-			2, 3, 0
-		};
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC1_ALPHA);
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC1_ALPHA);
+		glEnable(GL_DEPTH_TEST);
 
 		VertexArray va;
-		VertexBuffer vb(positions, 4 * 4 * sizeof(float));
-
+		VertexBuffer vb(renderer->SquarePositions, 4 * 4 * sizeof(float));
 		VertexBufferLayout layout;
 		layout.Push<float>(2);
 		layout.Push<float>(2);
+		
 		va.AddBuffer(vb, layout);
-
-		IndexBuffer ib(indices, 6);
-
-		glm::mat4 proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
-		glm::mat4 mvp = proj * view * model;
+		
+		IndexBuffer ib(renderer->SquareIndices, 6);
+		
+		glm::vec3 translationA(0, 0, 0);
+		glm::vec3 translationB(2, 0, 0);
+		glm::vec3 translationC(1, 4, 0);
+		glm::vec3 translationD(3, 0, 0);
 		
 		Shader shader("Basic.shader");
 		shader.Bind();
-		shader.SetUniform4f("u_Colour", 0.8f, 0.3f, 0.8f, 1.0f);
-		shader.SetUniformMat4f("u_MVP", mvp);
-
-		Texture texture("Mario.png");
-		texture.Bind();
-		shader.SetUniform1i("u_Texture,", 0);
-
+		
+		Texture texture("res/textures/Mario.png");
+		Texture texture2("res/textures/Luigi.png");
+		Texture texture3("Circle.jpg");
+		shader.SetUniform1i("u_Texture", 0);
+		
 		va.Unbind();
 		vb.Unbind();
 		ib.Unbind();
 		shader.Unbind();
+		
+		//VertexArray TBPArray;
+		//VertexBuffer TBPBuffer(renderer->TriangleBasedPyramidVertices, 5 * 4 * sizeof(float));
+		//VertexBufferLayout TBPLayout;
+		//TBPLayout.Push<float>(3);
+		//TBPLayout.Push<float>(2);
+		//
+		//TBPArray.AddBuffer(TBPBuffer, TBPLayout);
+		//
+		//IndexBuffer TBPIndex(renderer->TriangleBasedPyramidIndices, 12);
+		//
+		//Shader lightingShader("Lighting.shader");
+		//lightingShader.Bind();
+		//
+		//lightingShader.SetUniform3f("objectColour", 1.0f, 0.5f, 0.31f);
+		//lightingShader.SetUniform3f("lightColour", 1.0f, 1.0f, 1.0f);
+		//
+		//TBPArray.Unbind();
+		//TBPBuffer.Unbind();
+		//TBPIndex.Unbind();
+		//lightingShader.Unbind();
 
-		Renderer renderer;
+		Shader ModelShader("Model.shader");
+		ModelShader.Bind();
 
-		float r = 0.0f;
-		float increment = 0.05f;
 
 		/* Loop until the user closes the window */
-		while (!glfwWindowShouldClose(window))
+		while (!window->ShouldClose())
 		{
+			camera.UpdateCamera();
 			/* Render here */
-			renderer.Clear();
-
-			shader.Bind();
-			shader.SetUniform4f("u_Colour", r, 0.3f, 0.8f, 1.0f);
-
-			renderer.Draw(va, ib, shader);
-
-			if (r > 1.0f)
-				increment = -0.05f;
-			else if (r < 0.0f)
-				increment = 0.05f;
-
-			r += increment;
-
-			/* Swap front and back buffers */
-			glfwSwapBuffers(window);
-
-			/* Poll for and process events */
-			glfwPollEvents();
+			renderer->Clear();
+			//{
+			//	texture.Bind();
+			//	glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);
+			//	glm::mat4 mvp = camera.proj * camera.view * model;
+			//	shader.Bind();
+			//	shader.SetUniformMat4f("u_MVP", mvp);
+			//	renderer->Draw(va, ib, shader);
+			//}
+			//{
+			//	texture2.Bind();
+			//	glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB);
+			//	glm::mat4 mvp = camera.proj * camera.view * model;
+			//	shader.Bind();
+			//	shader.SetUniformMat4f("u_MVP", mvp);
+			//	renderer->Draw(va, ib, shader);
+			//}
+			{
+				//texture.Bind();
+				//glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);
+				//glm::mat4 mvp = camera.proj * camera.view * model;
+				//shader.Bind();
+				//shader.SetUniformMat4f("u_MVP", mvp);
+				//renderer->Draw(TBPArray, TBPIndex, shader);
+			}
+			{
+				glm::mat4 model = glm::translate(glm::mat4(1.0f), translationD);
+				glm::mat4 mvp = camera.proj * camera.view * model;
+				ModelShader.Bind();
+				ModelShader.SetUniformMat4f("u_MVP", mvp);
+				MyModel.Draw(ModelShader);
+			}
+			//TestObj.Update(va, ib, shader);
+			window->WindowUpdate();
 		}
-
 		glfwTerminate();
-
-	}
-
-	void Application::InitApplication()
-	{
-
 	}
 }

@@ -1,0 +1,3 @@
+[submodule "Dershlibob/Dershlibob/vendor/assimp"]
+	path = Dershlibob/Dershlibob/vendor/assimp
+	url = https://github.com/Dershlibob/assimp

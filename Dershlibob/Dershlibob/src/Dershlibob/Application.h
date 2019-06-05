@@ -13,8 +13,7 @@ namespace DB
 		virtual ~Application();
 
 		void Run();
-		void InitApplication();
-		//Window* window;
+
 	private:
 		bool bIsRunning = true;
 	};

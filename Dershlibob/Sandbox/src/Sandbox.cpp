@@ -1,6 +1,5 @@
 #include "Dershlibob.h"
 
-
 class App : public DB::Application
 {
 public:
@@ -13,7 +12,6 @@ public:
 	{
 
 	}
-
 };
 
 DB::Application* DB::CreateApplication()
